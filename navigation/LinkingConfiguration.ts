@@ -12,14 +12,24 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: 'Home',
             },
           },
-          TabTwo: {
+          Fridge: {
             screens: {
-              TabTwoScreen: 'two',
+              FridgeScreen: 'Fridge',
+            },
+          },
+          Menu: {
+            screens: {
+              MenuScreen: 'Menu',
+            },
+          },
+          Setting: {
+            screens: {
+              SettingScreen: 'Setting',
             },
           },
         },

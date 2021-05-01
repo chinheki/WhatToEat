@@ -3,38 +3,73 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons,MaterialCommunityIcons,FontAwesome5 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Text, StyleSheet,  View } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import HomeScreen from '../screens/HomeScreen';
+import FridgeScreen from '../screens/FridgeScreen';
+import MenuScreen from '../screens/MenuScreen';
+import SettingScreen from '../screens/SettingScreen';
+import { BottomTabParamList, HomeParamList,FridgeParamList,MenuParamList,SettingParamList } from '../types';
 
+const icon_color = "white"
+const basic_bg_color="#5F9EA0"
+const active_bg_color="#008B8B"
+const tab_bar_opton = {
+  activeTintColor: "white",
+  activeBackgroundColor: active_bg_color,
+  inactiveTintColor: "white",
+  inactiveBackgroundColor :basic_bg_color,
+  labelStyle: {
+    fontSize: 12,
+    color:icon_color
+  },  
+}
+const header_option = {
+  headerStyle: {
+    backgroundColor: active_bg_color,
+  },
+  headerTintColor: '#fff',
+  fontWeight: 'bold',
+}
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Home"
+      tabBarOptions={tab_bar_opton}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: () => <HomeTabBarIcon/>,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Fridge"
+        component={FridgeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: () => <FridgeTabBarIcon/>,
+        }}
+      />
+      <BottomTab.Screen
+        name="Menu"
+        component={MenuNavigator}
+        options={{
+          tabBarIcon: () => <MenuTabBarIcon/>,
+        }}
+      />
+      <BottomTab.Screen
+        name="Setting"
+        component={SettingNavigator}
+        options={{
+          tabBarIcon: () => <SettingTabBarIcon/>,
         }}
       />
     </BottomTab.Navigator>
@@ -43,36 +78,80 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function HomeTabBarIcon() {
+  return <FontAwesome5 name="question" color={icon_color} size={30} style={{ marginBottom: -3 }}/>;
 }
 
+function SettingTabBarIcon() {
+  return <AntDesign name="setting" color={icon_color}  size={30} style={{ marginBottom: -3 }}/>;
+}
+function MenuTabBarIcon() {
+  return <MaterialIcons  name="menu-book" color={icon_color}  size={30} style={{ marginBottom: -3 }}/>;
+}
+function FridgeTabBarIcon() {
+  return <MaterialCommunityIcons  name="fridge-outline" color={icon_color}  size={30} style={{ marginBottom: -3 }}/>;
+}
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          ...header_option,
+          headerTitle: 'WHAT TO EAT'
+        }}
       />
-    </TabOneStack.Navigator>
+    </HomeStack.Navigator>
   );
 }
+const FridgeStack = createStackNavigator<FridgeParamList>();
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
+function FridgeNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <FridgeStack.Navigator>
+      <FridgeStack.Screen
+        name="FridgeScreen"
+        component={FridgeScreen}
+        options={{
+          ...header_option,
+          headerTitle: 'MY FRIDGE'
+        }}
       />
-    </TabTwoStack.Navigator>
+    </FridgeStack.Navigator>
+  );
+}const MenuStack = createStackNavigator<MenuParamList>();
+
+function MenuNavigator() {
+  return (
+    <MenuStack.Navigator>
+      <MenuStack.Screen
+        name="MenuScreen"
+        component={MenuScreen}
+        options={{
+          ...header_option,
+          headerTitle: 'MY MENU'
+        }}
+      />
+    </MenuStack.Navigator>
+  );
+}const SettingStack = createStackNavigator<SettingParamList>();
+
+function SettingNavigator() {
+  return (
+    <SettingStack.Navigator>
+      <SettingStack.Screen
+        name="SettingScreen"
+        component={SettingScreen}
+        options={{
+          ...header_option,
+          headerTitle: 'SETTING'
+        }}
+      />
+    </SettingStack.Navigator>
   );
 }
